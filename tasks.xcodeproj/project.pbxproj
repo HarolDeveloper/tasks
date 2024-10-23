@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */; };
 		A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */; };
 		A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB12CC8CDF300FAC153 /* StatCard.swift */; };
 		A231CCB42CC8CF7600FAC153 /* TodayTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTaskCard.swift; sourceTree = "<group>"; };
 		A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A231CCB12CC8CDF300FAC153 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
 		A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTaskCard.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				A231CCB12CC8CDF300FAC153 /* StatCard.swift */,
 				A231CCB72CC8CFCA00FAC153 /* AssigneeAvatar.swift */,
+				9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				A266CC4F2CC8253900B1681E /* CalendarEvent.swift in Sources */,
 				A266CC4B2CC8252300B1681E /* AvailabilitySlot.swift in Sources */,
 				A266CC3D2CC824BF00B1681E /* UserProfile.swift in Sources */,
+				9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */,
 				A266CC512CC8254400B1681E /* PointHistory.swift in Sources */,
 				A231CCB82CC8CFCA00FAC153 /* AssigneeAvatar.swift in Sources */,
 				A266CC4D2CC8253000B1681E /* Calendar.swift in Sources */,
