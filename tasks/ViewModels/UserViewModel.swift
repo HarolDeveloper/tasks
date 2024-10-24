@@ -9,30 +9,37 @@ import SwiftUI
 import SwiftData
 import Foundation
 
-@Observable
-class UserViewModel {
+class UserViewModel: ObservableObject {
+    // MARK: - Published Properties
+    @Published private(set) var isRefreshing = false
+    @Published private(set) var currentUser: User?
+    @Published private(set) var isLoading = false
+    @Published private(set) var error: Error?
+    
+    // MARK: - Private Properties
     private let userState: UserState
     private let modelContext: ModelContext
     
+    // MARK: - Initialization
     init(userState: UserState, modelContext: ModelContext) {
         self.userState = userState
         self.modelContext = modelContext
-        self.userState.initialize(with: modelContext)
+        loadInitialState()
+    }
+    
+    // MARK: - State Management
+    private func loadInitialState() {
+        userState.initialize(with: modelContext)
+        updateFromUserState()
+    }
+    
+    private func updateFromUserState() {
+        currentUser = userState.currentUser
+        isLoading = userState.isLoading
+        error = userState.error
     }
     
     // MARK: - Computed Properties
-    var currentUser: User? {
-        userState.currentUser
-    }
-    
-    var isLoading: Bool {
-        userState.isLoading
-    }
-    
-    var error: Error? {
-        userState.error
-    }
-    
     var username: String {
         currentUser?.username ?? "Guest"
     }
@@ -45,10 +52,32 @@ class UserViewModel {
         currentUser?.stats
     }
     
-    // MARK: - Actions
+    var displayName: String {
+        if let firstName = userProfile?.firstName,
+           let lastName = userProfile?.lastName {
+            return "\(firstName) \(lastName)"
+        } else if let firstName = userProfile?.firstName {
+            return firstName
+        } else {
+            return username
+        }
+    }
+    
+    var totalPoints: Int {
+        userStats?.totalPoints ?? 0
+    }
+    
+    
+    var hasProfile: Bool {
+        userProfile != nil
+    }
+    
+    // MARK: - User Actions
     func retryLoading() {
         userState.initialize(with: modelContext)
+        updateFromUserState()
     }
+    
     
     func updateProfile(firstName: String?, lastName: String?, phone: String?) {
             userState.updateProfile(firstName: firstName, lastName: lastName, phone: phone)

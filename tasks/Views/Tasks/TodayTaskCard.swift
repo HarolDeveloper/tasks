@@ -11,42 +11,40 @@ struct TodayTasksCard: View {
     let tasks: [Task]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Header
-            HStack {
-                Label("Tareas de Hoy", systemImage: "calendar")
-                    .font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            ForEach(tasks) { task in
+                TaskRow(task: task)
                 
-                Spacer()
-                
-                NavigationLink(destination: AllTasksView()) {
-                    Text("Ver todas")
-                        .font(.subheadline)
-                        .foregroundColor(.purple)
+                if task.id != tasks.last?.id {
+                    Divider()
                 }
-            }
-            
-            if tasks.isEmpty {
-                EmptyTasksView()
-            } else {
-                tasksList
             }
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
-    }
-    
-    private var tasksList: some View {
-        VStack(spacing: 12) {
-            ForEach(tasks) { task in
-                TaskRow(task: task)
-            }
-        }
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(radius: 2)
     }
 }
 
-#Preview {
-    TodayTasksCard(tasks: [Task(title: "Limpiar cocina", priority: 1)])
+
+
+// TasksContent actualizado
+struct TasksContent: View {
+    let isLoading: Bool
+    let todayTasks: [Task]
+    
+    var body: some View {
+        if isLoading {
+            LoadingCardView(title: "Cargando tareas...")
+        } else if !todayTasks.isEmpty {
+            TodayTasksCard(tasks: todayTasks)
+        } else {
+            EmptyStateView(
+                icon: "checkmark.circle",
+                title: "¡Todo al día!",
+                message: "No hay tareas pendientes para hoy"
+            )
+        }
+    }
 }

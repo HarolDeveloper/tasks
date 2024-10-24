@@ -1,60 +1,60 @@
-
 // ContentView.swift
 import SwiftUI
 import SwiftData
 
 
-// ContentView.swift
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var userViewModel: UserViewModel  // Changed to @StateObject
+    @StateObject private var userViewModel: UserViewModel
     
     init(userViewModel: UserViewModel) {
-        _userViewModel = State(wrappedValue: userViewModel)  // Initialize with StateObject
+        _userViewModel = StateObject(wrappedValue: userViewModel)
     }
     
-      
     var body: some View {
         if userViewModel.isLoading {
             LoadingView()
         } else if let error = userViewModel.error {
             ErrorView(error: error) {
-                userViewModel.retryLoading()  // Now this will work
+                userViewModel.retryLoading()
             }
         } else {
-            MainTabView(userViewModel: userViewModel, modelContext: modelContext)
+            MainTabView(userViewModel: userViewModel)
         }
     }
 }
 
-
+// MARK: - Preview Provider
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // Crear un contenedor de modelo con los modelos necesarios para la vista previa
-        let previewModelContainer: ModelContainer = {
-            do {
-                return try ModelContainer(
-                    for: User.self, Task.self, HousingGroup.self,
-                    UserProfile.self, RoommateUserStats.self,
-                    TaskType.self, RoommateTaskAssignment.self,
-                    HouseholdMember.self, UserCalendar.self,
-                    CalendarEvent.self, UserAvailabilitySlot.self,
-                    PointHistory.self,
-                    configurations: ModelConfiguration(isStoredInMemoryOnly: true) // En memoria para la vista previa
-                )
-            } catch {
-                fatalError("Error al crear el ModelContainer para la vista previa: \(error)")
-            }
-        }()
-
-        // Crear el estado de usuario de prueba
-        let previewUserState = UserState() // Configura tu UserState si es necesario
-
-        // Proporcionar el `UserViewModel` de prueba a la vista
-        ContentView(
-            userViewModel: UserViewModel(userState: previewUserState, modelContext: previewModelContainer.mainContext)
+        let container = try! ModelContainer(
+            for: Schema([
+                User.self,
+                Task.self,
+                HousingGroup.self,
+                UserProfile.self,
+                RoommateUserStats.self,
+                TaskType.self,
+                RoommateTaskAssignment.self,
+                HouseholdMember.self,
+                UserCalendar.self,
+                CalendarEvent.self,
+                UserAvailabilitySlot.self,
+                PointHistory.self
+            ]),
+            configurations: [
+                ModelConfiguration(isStoredInMemoryOnly: true)
+            ]
         )
-        .modelContainer(previewModelContainer) // Vincular el contenedor
+        
+        let userState = UserState()
+        let viewModel = UserViewModel(
+            userState: userState,
+            modelContext: container.mainContext
+        )
+        
+        ContentView(userViewModel: viewModel)
+            .modelContainer(container)
     }
 }
 

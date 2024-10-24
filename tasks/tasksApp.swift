@@ -17,11 +17,9 @@ struct TasksApp: App {
                 PointHistory.self,
                 configurations: ModelConfiguration(isStoredInMemoryOnly: false)
             )
-            
             userState = UserState()
-            
         } catch {
-            fatalError("Error initializing ModelContainer: \(error)")
+            fatalError("Error initializing ModelContainer: \(error.localizedDescription)")
         }
     }
     

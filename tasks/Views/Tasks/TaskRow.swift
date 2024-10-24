@@ -9,56 +9,72 @@ import SwiftUI
 
 struct TaskRow: View {
     let task: Task
-    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         HStack(spacing: 12) {
-            // Task Status Indicator
+            // Status indicator
             Circle()
                 .fill(statusColor)
                 .frame(width: 8, height: 8)
             
-            // Task Title
-            Text(task.title)
-                .font(.system(.body, weight: .medium))
-            
-            Spacer()
-            
-            // Assignees
-            HStack(spacing: -8) {
-                ForEach(Array(task.assignments.prefix(3)), id: \.id) { assignment in
-                    AssigneeAvatar(assignment: assignment)
+            // Task details
+            VStack(alignment: .leading, spacing: 4) {
+                Text(task.title)
+                    .font(.headline)
+                
+                if let description = task.taskDescription {
+                    Text(description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 }
                 
-                if task.assignments.count > 3 {
-                    Text("+\(task.assignments.count - 3)")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .padding(.leading, 8)
+                // Task metadata
+                HStack(spacing: 8) {
+                    Label(priorityText, systemImage: "flag.fill")
+                        .foregroundColor(priorityColor)
+                    
+                    if let dueDate = task.dueDate {
+                        Label(formatDate(dueDate), systemImage: "clock")
+                            .foregroundColor(.secondary)
+                    }
                 }
+                .font(.caption)
             }
             
-            // Navigation Chevron
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundColor(.gray)
+            Spacer()
         }
-        .padding()
-        .background(Color.gray.opacity(0.05))
-        .cornerRadius(12)
     }
     
     private var statusColor: Color {
         switch task.status {
-        case "pending": return .orange
-        case "inProgress": return .blue
+        case "pending": return .yellow
         case "completed": return .green
+        case "in_progress": return .blue
         default: return .gray
         }
     }
-}
-
-#Preview {
-    let task = Task(title: "Limpiar cocina", priority: 1)
-    return TaskRow(task: task)
+    
+    private var priorityText: String {
+        switch task.priority {
+        case 1: return "Baja"
+        case 2: return "Media"
+        case 3: return "Alta"
+        default: return "Normal"
+        }
+    }
+    
+    private var priorityColor: Color {
+        switch task.priority {
+        case 1: return .green
+        case 2: return .orange
+        case 3: return .red
+        default: return .blue
+        }
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
 }

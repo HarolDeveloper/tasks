@@ -3,13 +3,14 @@ import SwiftData
 import Combine
 
 @Observable
-class TasksViewModel {
+class TasksViewModel: ObservableObject {
     private let modelContext: ModelContext
     private(set) var tasks: [Task] = []
     private(set) var assignments: [RoommateTaskAssignment] = []
     private(set) var todayTasks: [Task] = []
     private(set) var isLoading = false
     
+    // Computed properties - no necesitan @Published
     var pendingTasks: Int {
         tasks.filter { $0.status == "pending" }.count
     }
@@ -23,66 +24,48 @@ class TasksViewModel {
         loadInitialData()
     }
     
+    // MARK: - Data Loading
     private func loadInitialData() {
-        loadTasks()
-        loadAssignments()
-        updateStats()
-    }
-    
-    func refresh() async {
         isLoading = true
-        // Limpiar los arrays antes de recargar
-        tasks = []
-        assignments = []
-        todayTasks = []
-        
         loadTasks()
         loadAssignments()
         updateStats()
         isLoading = false
     }
     
+    @MainActor
+       func refresh() async {
+           isLoading = true
+           loadTasks()
+           loadAssignments()
+           updateStats()
+           isLoading = false
+       }
+    
     private func loadTasks() {
+        guard let url = Bundle.main.url(forResource: "tasks", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else {
+            print("Could not find tasks.json in bundle")
+            return
+        }
+        
         do {
-            // Primero limpiar los datos existentes
-            try cleanExistingData()
-            
-            // Luego cargar el JSON
-            guard let url = Bundle.main.url(forResource: "tasks", withExtension: "json"),
-                  let data = try? Data(contentsOf: url) else {
-                print("Could not find tasks.json in bundle")
-                return
+            // Debug print JSON
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Loading JSON: \(jsonString)")
             }
             
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
             
-            struct TasksResponse: Codable {
-                let tasks: [TaskDTO]
-            }
-            
-            struct TaskDTO: Codable {
-                let id: UUID
-                let title: String
-                let description: String?
-                let status: String
-                let priority: Int
-                let createdAt: Date
-                let dueDate: Date?
-                let taskType: TaskTypeDTO
-            }
-            
-            struct TaskTypeDTO: Codable {
-                let id: UUID
-                let name: String
-                let estimatedDuration: Int
-                let points: Int
-            }
-            
             let response = try decoder.decode(TasksResponse.self, from: data)
             
-            // Procesar y guardar los datos en lotes
+            // Clean existing data
+            try cleanExistingData()
+            
+            // Process tasks
             for taskDTO in response.tasks {
+                // Create TaskType
                 let taskType = TaskType(
                     name: taskDTO.taskType.name,
                     estimatedDuration: taskDTO.taskType.estimatedDuration,
@@ -91,6 +74,7 @@ class TasksViewModel {
                 taskType.id = taskDTO.taskType.id
                 modelContext.insert(taskType)
                 
+                // Create Task
                 let task = Task(title: taskDTO.title, priority: taskDTO.priority)
                 task.id = taskDTO.id
                 task.taskDescription = taskDTO.description
@@ -101,46 +85,52 @@ class TasksViewModel {
                 
                 modelContext.insert(task)
                 tasks.append(task)
-                
-                // Guardar cada cierto número de inserciones para evitar sobrecarga
-                if tasks.count % 10 == 0 {
-                    try modelContext.save()
-                }
             }
             
-            // Guardar cambios finales
             try modelContext.save()
             
+            // Debug print computed statistics
+            print("=== Debug: Tareas Cargadas ===")
+            print("Total tareas: \(tasks.count)")
+            print("Pendientes: \(pendingTasks)")
+            print("Completadas: \(completedTasks)")
+            print("Tareas de hoy: \(todayTasks.count)")
+            
         } catch {
-            print("Error en loadTasks: \(error)")
+            print("Error loading tasks: \(error)")
+            handleDecodingError(error)
+        }
+    }
+    
+    private func handleDecodingError(_ error: Error) {
+        if let decodingError = error as? DecodingError {
+            switch decodingError {
+            case .keyNotFound(let key, let context):
+                print("Missing key: \(key.stringValue), path: \(context.codingPath)")
+            case .valueNotFound(let type, let context):
+                print("Missing value of type \(type), path: \(context.codingPath)")
+            case .typeMismatch(let type, let context):
+                print("Type mismatch: expected \(type), path: \(context.codingPath)")
+            case .dataCorrupted(let context):
+                print("Data corrupted: \(context)")
+            @unknown default:
+                print("Unknown decoding error")
+            }
         }
     }
     
     private func cleanExistingData() throws {
-        // Primero eliminar las asignaciones
-        let assignmentDescriptor = FetchDescriptor<RoommateTaskAssignment>()
-        if let existingAssignments = try? modelContext.fetch(assignmentDescriptor) {
-            existingAssignments.forEach { modelContext.delete($0) }
-        }
-        
-        // Luego eliminar las tareas
         let taskDescriptor = FetchDescriptor<Task>()
         if let existingTasks = try? modelContext.fetch(taskDescriptor) {
             existingTasks.forEach { modelContext.delete($0) }
         }
         
-        // Finalmente eliminar los tipos de tarea
         let typeDescriptor = FetchDescriptor<TaskType>()
         if let existingTypes = try? modelContext.fetch(typeDescriptor) {
             existingTypes.forEach { modelContext.delete($0) }
         }
         
         try modelContext.save()
-        
-        // Limpiar los arrays locales
-        tasks = []
-        assignments = []
-        todayTasks = []
     }
     
     private func loadAssignments() {
@@ -154,38 +144,26 @@ class TasksViewModel {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
             
-            struct AssignmentsResponse: Codable {
-                let assignments: [AssignmentDTO]
-            }
-            
-            struct AssignmentDTO: Codable {
-                let id: UUID
-                let status: String
-                let assignedAt: Date
-                let scheduledStart: Date?
-                let scheduledEnd: Date?
-                let completedAt: Date?
-                let taskId: String
-            }
-            
             let response = try decoder.decode(AssignmentsResponse.self, from: data)
             
-            for assignmentDTO in response.assignments {
-                if let task = tasks.first(where: { $0.id.uuidString == assignmentDTO.taskId }) {
-                    let assignment = RoommateTaskAssignment(status: assignmentDTO.status)
-                    assignment.id = assignmentDTO.id
-                    assignment.assignedAt = assignmentDTO.assignedAt
-                    assignment.scheduledStart = assignmentDTO.scheduledStart
-                    assignment.scheduledEnd = assignmentDTO.scheduledEnd
-                    assignment.completedAt = assignmentDTO.completedAt
-                    assignment.task = task
-                    
-                    modelContext.insert(assignment)
-                    assignments.append(assignment)
-                }
+            // Limpiar asignaciones existentes
+            let descriptor = FetchDescriptor<RoommateTaskAssignment>()
+            if let existingAssignments = try? modelContext.fetch(descriptor) {
+                existingAssignments.forEach { modelContext.delete($0) }
             }
             
+            // Vincular y guardar nuevas asignaciones
+            for assignment in response.assignments {
+                if let taskId = assignment.taskId,
+                   let task = tasks.first(where: { $0.id.uuidString == taskId }) {
+                    assignment.task = task
+                }
+                modelContext.insert(assignment)
+            }
+            assignments = response.assignments
+            
             try modelContext.save()
+            print("Asignaciones cargadas: \(assignments.count)")
             
         } catch {
             print("Error loading assignments: \(error)")
@@ -196,6 +174,7 @@ class TasksViewModel {
         let calendar = Calendar.current
         let today = Date()
         
+        // Update today's tasks
         todayTasks = tasks.filter { task in
             if let dueDate = task.dueDate {
                 return calendar.isDate(dueDate, inSameDayAs: today)
@@ -203,4 +182,31 @@ class TasksViewModel {
             return false
         }
     }
+}
+
+// MARK: - Supporting Types
+struct TasksResponse: Codable {
+    let tasks: [TaskDTO]
+}
+
+struct TaskDTO: Codable {
+    let id: UUID
+    let title: String
+    let description: String?
+    let status: String
+    let priority: Int
+    let createdAt: Date
+    let dueDate: Date?
+    let taskType: TaskTypeDTO
+}
+
+struct TaskTypeDTO: Codable {
+    let id: UUID
+    let name: String
+    let estimatedDuration: Int
+    let points: Int
+}
+
+struct AssignmentsResponse: Codable {
+    let assignments: [RoommateTaskAssignment]
 }

@@ -2,30 +2,27 @@
     "assignments": [
         {
             "id": "770e8400-e29b-41d4-a716-446655440000",
-            "status": "pending",
+            "taskId": "550e8400-e29b-41d4-a716-446655440000",
             "assignedAt": "2024-10-23T08:00:00Z",
             "scheduledStart": "2024-10-23T10:00:00Z",
             "scheduledEnd": "2024-10-24T11:00:00Z",
-            "completedAt": null,
-            "taskId": "550e8400-e29b-41d4-a716-446655440000"
+            "status": "pending"
         },
         {
             "id": "770e8400-e29b-41d4-a716-446655440001",
-            "status": "pending",
+            "taskId": "550e8400-e29b-41d4-a716-446655440001",
             "assignedAt": "2024-10-23T08:00:00Z",
             "scheduledStart": "2024-10-23T14:00:00Z",
             "scheduledEnd": "2024-10-24T16:00:00Z",
-            "completedAt": null,
-            "taskId": "550e8400-e29b-41d4-a716-446655440001"
+            "status": "pending"
         },
         {
             "id": "770e8400-e29b-41d4-a716-446655440002",
-            "status": "completed",
+            "taskId": "550e8400-e29b-41d4-a716-446655440002",
             "assignedAt": "2024-10-23T08:00:00Z",
             "scheduledStart": "2024-10-23T16:00:00Z",
             "scheduledEnd": "2024-10-24T17:30:00Z",
-            "completedAt": "2024-10-23T18:00:00Z",
-            "taskId": "550e8400-e29b-41d4-a716-446655440002"
+            "status": "completed"
         }
     ]
 }

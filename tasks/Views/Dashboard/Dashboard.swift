@@ -9,13 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct Dashboard: View {
-
-    @State private var userViewModel: UserViewModel
-    @State private var tasksViewModel: TasksViewModel
+    @ObservedObject var userViewModel: UserViewModel
+    @StateObject private var tasksViewModel: TasksViewModel
     
     init(userViewModel: UserViewModel, modelContext: ModelContext) {
-        _userViewModel = State(initialValue: userViewModel)
-        _tasksViewModel = State(initialValue: TasksViewModel(modelContext: modelContext))
+        self.userViewModel = userViewModel
+        _tasksViewModel = StateObject(wrappedValue: TasksViewModel(modelContext: modelContext))
     }
     
     private var completedTasks: [Task] {
@@ -26,13 +25,16 @@ struct Dashboard: View {
         ScrollView {
             VStack(spacing: 16) {
                 // User Header
-      
-              if let profile = userViewModel.userProfile {
-                  UserHeaderView(profile: profile)
+                if let profile = userViewModel.userProfile {
+                    UserHeaderView(profile: profile)
+                        .padding(.bottom, 8)
                 }
                 
-                // Stats Cards
-                HStack(spacing: 16) {
+                // Stats Grid
+                LazyVGrid(columns: [
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ], spacing: 16) {
                     StatCard(
                         title: "Pendientes",
                         value: tasksViewModel.pendingTasks,
@@ -46,23 +48,30 @@ struct Dashboard: View {
                     )
                 }
                 
-                // User Stats
-              //  if let stats = userViewModel.userStats {
-                //    UserStatsCard(stats: stats)
-               // }
-                
-                // Today's Tasks
-
-                if tasksViewModel.isLoading {
-                    ProgressView()
-                } else if !tasksViewModel.todayTasks.isEmpty {
-                    TodayTasksCard(tasks: tasksViewModel.todayTasks)
-                  NavigationLink(destination: TaskHistory(completedTasks: completedTasks)) {
-                    Text("Ver tareas completadas")
+                // Today's Tasks Section
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("Tareas de Hoy")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        Spacer()
+                        
+                        if !completedTasks.isEmpty {
+                            NavigationLink(destination: TaskHistory(completedTasks: completedTasks)) {
+                                Label("Historial", systemImage: "clock.arrow.circlepath")
+                                    .font(.subheadline)
+                            }
+                        }
+                    }
+                    
+                    // Usar TasksContent para mostrar las tareas
+                    TasksContent(
+                        isLoading: tasksViewModel.isLoading,
+                        todayTasks: tasksViewModel.todayTasks
+                    )
                 }
-                } else {
-                    Text("No hay tareas para hoy")  
-                }
+                .padding(.top, 8)
             }
             .padding()
         }
@@ -73,3 +82,30 @@ struct Dashboard: View {
     }
 }
 
+// MARK: - Supporting Views
+struct EmptyStateView: View {
+    let icon: String
+    let title: String
+    let message: String
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: icon)
+                .font(.system(size: 50))
+                .foregroundColor(.gray)
+            
+            Text(title)
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text(message)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+    }
+}

@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State private var viewModel: UserViewModel
+    @ObservedObject var userViewModel: UserViewModel
     
     var body: some View {
         Form {
-            if let profile = viewModel.userProfile {
+            if let profile = userViewModel.userProfile {
                 Section("Información Personal") {
                     TextField("Nombre", text: .init(
                         get: { profile.firstName ?? "" },
-                        set: { viewModel.updateProfile(
+                        set: { userViewModel.updateProfile(
                             firstName: $0,
                             lastName: profile.lastName,
                             phone: profile.phone
@@ -25,7 +25,7 @@ struct ProfileView: View {
                 }
             }
             
-            if let stats = viewModel.userStats {
+            if let stats = userViewModel.userStats {
                 Section("Estadísticas") {
                     Text("Puntos: \(stats.totalPoints)")
                     Text("Tareas Completadas: \(stats.tasksCompleted)")
@@ -34,5 +34,4 @@ struct ProfileView: View {
         }
     }
 }
-
 

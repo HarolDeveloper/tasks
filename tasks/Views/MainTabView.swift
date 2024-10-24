@@ -8,20 +8,14 @@
 import SwiftUI
 import SwiftData
 
-// MARK: - MainTabView
 struct MainTabView: View {
-    @State private var userViewModel: UserViewModel
-    let modelContext: ModelContext
+    @ObservedObject var userViewModel: UserViewModel
+    @Environment(\.modelContext) private var modelContext
     @State private var selectedTab = 0
-    
-    init(userViewModel: UserViewModel, modelContext: ModelContext) {
-        _userViewModel = State(initialValue: userViewModel)
-        self.modelContext = modelContext
-    }
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavigationView {
+            NavigationStack {
                 Dashboard(
                     userViewModel: userViewModel,
                     modelContext: modelContext
@@ -32,11 +26,8 @@ struct MainTabView: View {
             }
             .tag(0)
             
-            NavigationView {
-                Dashboard(
-                    userViewModel: userViewModel,
-                    modelContext: modelContext
-                )
+            NavigationStack {
+                ProfileView(userViewModel: userViewModel)
             }
             .tabItem {
                 Label("Perfil", systemImage: "person.fill")
@@ -45,4 +36,3 @@ struct MainTabView: View {
         }
     }
 }
-
