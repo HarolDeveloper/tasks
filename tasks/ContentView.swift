@@ -13,8 +13,6 @@ struct ContentView: View {
         _userViewModel = State(wrappedValue: userViewModel)  // Initialize with StateObject
     }
     
-    private var completedTasks: [Task] {
-        tasks.filter { $0.status == "completed" }
       
     var body: some View {
         if userViewModel.isLoading {

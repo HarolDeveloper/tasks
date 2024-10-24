@@ -34,7 +34,7 @@
             "id": "550e8400-e29b-41d4-a716-446655440002",
             "title": "Lavar ropa",
             "description": "Lavar y doblar ropa",
-            "status": "pending",
+            "status": "completed",
             "priority": 1,
             "createdAt": "2024-10-23T08:00:00Z",
             "dueDate": "2024-10-23T18:00:00Z",

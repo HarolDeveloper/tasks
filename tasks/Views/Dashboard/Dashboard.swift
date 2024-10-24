@@ -18,6 +18,10 @@ struct Dashboard: View {
         _tasksViewModel = State(initialValue: TasksViewModel(modelContext: modelContext))
     }
     
+    private var completedTasks: [Task] {
+        tasksViewModel.tasks.filter { $0.status == "completed" }
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
@@ -53,7 +57,7 @@ struct Dashboard: View {
                     ProgressView()
                 } else if !tasksViewModel.todayTasks.isEmpty {
                     TodayTasksCard(tasks: tasksViewModel.todayTasks)
-                  NavigationLink(destination: TaskHistory(completedTasks: tasksViewModel.completedTasks)) {
+                  NavigationLink(destination: TaskHistory(completedTasks: completedTasks)) {
                     Text("Ver tareas completadas")
                 }
                 } else {
