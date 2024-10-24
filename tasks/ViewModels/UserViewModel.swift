@@ -17,6 +17,7 @@ class UserViewModel {
     init(userState: UserState, modelContext: ModelContext) {
         self.userState = userState
         self.modelContext = modelContext
+        self.userState.initialize(with: modelContext)
     }
     
     // MARK: - Computed Properties
@@ -33,7 +34,7 @@ class UserViewModel {
     }
     
     var username: String {
-        currentUser?.username ?? ""
+        currentUser?.username ?? "Guest"
     }
     
     var userProfile: UserProfile? {
@@ -44,16 +45,14 @@ class UserViewModel {
         currentUser?.stats
     }
     
-    // MARK: - User Actions
-    func updateProfile(firstName: String?, lastName: String?, phone: String?) {
-        userState.updateProfile(firstName: firstName, lastName: lastName, phone: phone)
-    }
-    
-    func updatePreferences(_ preferences: [String: String]) {
-        userState.updatePreferences(preferences)
-    }
-    
+    // MARK: - Actions
     func retryLoading() {
         userState.initialize(with: modelContext)
     }
+    
+    func updateProfile(firstName: String?, lastName: String?, phone: String?) {
+            userState.updateProfile(firstName: firstName, lastName: lastName, phone: phone)
+        }
+    
+
 }

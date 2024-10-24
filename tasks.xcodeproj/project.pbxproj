@@ -15,7 +15,6 @@
 		A231CCBA2CC8CFEF00FAC153 /* EmptyTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB92CC8CFEF00FAC153 /* EmptyTasksView.swift */; };
 		A231CCBF2CC8D04900FAC153 /* TodayTasksCard_Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCBE2CC8D04900FAC153 /* TodayTasksCard_Previews.swift */; };
 		A231CCC12CC8D07100FAC153 /* AllTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCC02CC8D07100FAC153 /* AllTasksView.swift */; };
-		A231CCC92CC9E1F400FAC153 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCC82CC9E1F400FAC153 /* AppState.swift */; };
 		A231CCCD2CC9E43500FAC153 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCCC2CC9E43500FAC153 /* UserViewModel.swift */; };
 		A231CCCF2CC9E5E700FAC153 /* TasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCCE2CC9E5E700FAC153 /* TasksViewModel.swift */; };
 		A231CCD12CC9ED0F00FAC153 /* tasks.json in Resources */ = {isa = PBXBuildFile; fileRef = A231CCD02CC9ED0F00FAC153 /* tasks.json */; };
@@ -53,7 +52,6 @@
 		A231CCB92CC8CFEF00FAC153 /* EmptyTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTasksView.swift; sourceTree = "<group>"; };
 		A231CCBE2CC8D04900FAC153 /* TodayTasksCard_Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTasksCard_Previews.swift; sourceTree = "<group>"; };
 		A231CCC02CC8D07100FAC153 /* AllTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTasksView.swift; sourceTree = "<group>"; };
-		A231CCC82CC9E1F400FAC153 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		A231CCCC2CC9E43500FAC153 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		A231CCCE2CC9E5E700FAC153 /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
 		A231CCD02CC9ED0F00FAC153 /* tasks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tasks.json; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 				A266CC332CC8185100B1681E /* Tasks */,
 				A266CC322CC8184300B1681E /* Schedule */,
 				A266CC312CC8183900B1681E /* Room */,
-				A231CCC82CC9E1F400FAC153 /* AppState.swift */,
 				A2B80ACB2CCA3FE600ED1453 /* MainTabView.swift */,
 			);
 			path = Views;
@@ -366,7 +363,6 @@
 				A231CCB42CC8CF7600FAC153 /* TodayTaskCard.swift in Sources */,
 				A2B80ACC2CCA3FE600ED1453 /* MainTabView.swift in Sources */,
 				A266CC3B2CC824AC00B1681E /* User.swift in Sources */,
-				A231CCC92CC9E1F400FAC153 /* AppState.swift in Sources */,
 				A231CCBA2CC8CFEF00FAC153 /* EmptyTasksView.swift in Sources */,
 				A266CC432CC824E700B1681E /* GroupMember.swift in Sources */,
 				A231CCC12CC8D07100FAC153 /* AllTasksView.swift in Sources */,

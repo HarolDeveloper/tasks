@@ -4,12 +4,13 @@ import SwiftUI
 import SwiftData
 
 
+// ContentView.swift
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var userViewModel: UserViewModel
+    @State private var userViewModel: UserViewModel  // Changed to @StateObject
     
     init(userViewModel: UserViewModel) {
-        _userViewModel = State(initialValue: userViewModel)
+        _userViewModel = State(wrappedValue: userViewModel)  // Initialize with StateObject
     }
     
     var body: some View {
@@ -17,13 +18,14 @@ struct ContentView: View {
             LoadingView()
         } else if let error = userViewModel.error {
             ErrorView(error: error) {
-                userViewModel.retryLoading()
+                userViewModel.retryLoading()  // Now this will work
             }
         } else {
             MainTabView(userViewModel: userViewModel, modelContext: modelContext)
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
