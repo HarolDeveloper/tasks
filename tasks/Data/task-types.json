@@ -1,0 +1,28 @@
+{
+    "taskTypes": [
+        {
+            "id": "660e8400-e29b-41d4-a716-446655440001",
+            "name": "Limpieza",
+            "taskDescription": "Tareas de limpieza y mantenimiento",
+            "estimatedDuration": 60,
+            "points": 10,
+            "frequency": "daily"
+        },
+        {
+            "id": "660e8400-e29b-41d4-a716-446655440002",
+            "name": "Compras",
+            "taskDescription": "Compras para el hogar",
+            "estimatedDuration": 120,
+            "points": 15,
+            "frequency": "weekly"
+        },
+        {
+            "id": "660e8400-e29b-41d4-a716-446655440003",
+            "name": "Lavandería",
+            "taskDescription": "Lavado y doblado de ropa",
+            "estimatedDuration": 90,
+            "points": 12,
+            "frequency": "weekly"
+        }
+    ]
+}

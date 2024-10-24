@@ -1,0 +1,33 @@
+{
+    "id": "880e8400-e29b-41d4-a716-446655440000",
+    "username": "john_doe",
+    "email": "john@example.com",
+    "passwordHash": "hashed_password_here",
+    "createdAt": "2024-10-23T00:00:00Z",
+    "lastLogin": "2024-10-23T08:00:00Z",
+    "isActive": true,
+    "profile": {
+        "id": "990e8400-e29b-41d4-a716-446655440000",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone": "+1234567890",
+        "preferences": {
+            "theme": "dark",
+            "notifications": "enabled"
+        }
+    },
+    "stats": {
+        "id": "aa0e8400-e29b-41d4-a716-446655440000",
+        "totalPoints": 150,
+        "tasksCompleted": 12,
+        "tasksFailed": 2,
+        "currentStreak": 3,
+        "lastUpdated": "2024-10-23T08:00:00Z",
+        "averageCompletionTime": 3600,
+        "preferredTaskTypes": {
+            "Limpieza": 5,
+            "Compras": 4,
+            "Lavandería": 3
+        }
+    }
+}
