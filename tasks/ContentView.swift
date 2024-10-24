@@ -12,8 +12,8 @@ struct ContentView: View {
         tasks.filter { $0.status == "pending" }.count
     }
     
-    private var completedTasks: Int {
-        tasks.filter { $0.status == "completed" }.count
+    private var completedTasks: [Task] {
+        tasks.filter { $0.status == "completed" }
     }
     
     private var todayTasks: [Task] {
@@ -27,7 +27,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Dashboard(
                 pendingTasks: pendingTasks,
                 completedTasks: completedTasks,

@@ -18,9 +18,10 @@ struct HistoryTaskCard: View {
             Image(systemName: "person.fill")
                 .resizable()
                 .aspectRatio(1/1, contentMode: .fit)
-                .frame(height: 50.0)
+                .frame(height: 30.0)
                 .foregroundColor(Color.blue)
                 .padding(.trailing, 10)
+                .padding(.leading, 5)
             
             VStack(alignment: .leading) {
                 Text(taskAuthor?.username ?? "No user")
@@ -34,17 +35,18 @@ struct HistoryTaskCard: View {
             
             Spacer()
             
-            Button("Comments", systemImage: "message.fill") {
-                /* TBD */
+            Button(action: {/* TODO */}) {
+                Image(systemName: "message.fill")
+                    .resizable()
+                    .aspectRatio(1/1, contentMode: .fit)
+                    .frame(height: 25)
+                    .padding(.trailing, 5)
             }
-            .labelStyle(.iconOnly)
-            .font(.title)
                 
         }
         .padding()
         .background(Color.white)
         .cornerRadius(10)
-        .shadow(radius: 15)
     }
 
 }

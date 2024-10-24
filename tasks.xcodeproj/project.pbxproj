@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */; };
+		9F81C5C82CC95069004C6315 /* TaskHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C72CC95069004C6315 /* TaskHistory.swift */; };
+		9F81C5CC2CC97921004C6315 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5CB2CC97921004C6315 /* MainView.swift */; };
 		A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */; };
 		A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB12CC8CDF300FAC153 /* StatCard.swift */; };
 		A231CCB42CC8CF7600FAC153 /* TodayTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTaskCard.swift; sourceTree = "<group>"; };
+		9F81C5C72CC95069004C6315 /* TaskHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHistory.swift; sourceTree = "<group>"; };
+		9F81C5CB2CC97921004C6315 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A231CCB12CC8CDF300FAC153 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
 		A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTaskCard.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 				A266CC332CC8185100B1681E /* Tasks */,
 				A266CC322CC8184300B1681E /* Schedule */,
 				A266CC312CC8183900B1681E /* Room */,
+				9F81C5CB2CC97921004C6315 /* MainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,6 +186,8 @@
 				A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */,
 				A231CCB52CC8CF9B00FAC153 /* TaskRow.swift */,
 				A231CCB92CC8CFEF00FAC153 /* EmptyTasksView.swift */,
+				9F81C5C72CC95069004C6315 /* TaskHistory.swift */,
+				9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -190,7 +197,6 @@
 			children = (
 				A231CCB12CC8CDF300FAC153 /* StatCard.swift */,
 				A231CCB72CC8CFCA00FAC153 /* AssigneeAvatar.swift */,
-				9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -321,9 +327,11 @@
 				A266CC472CC8250800B1681E /* TaskType.swift in Sources */,
 				A266CC212CC80EB400B1681E /* ContentView.swift in Sources */,
 				A266CC3F2CC824CD00B1681E /* UserStats.swift in Sources */,
+				9F81C5C82CC95069004C6315 /* TaskHistory.swift in Sources */,
 				A266CC412CC824DB00B1681E /* HousingGroup.swift in Sources */,
 				A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */,
 				A266CC4F2CC8253900B1681E /* CalendarEvent.swift in Sources */,
+				9F81C5CC2CC97921004C6315 /* MainView.swift in Sources */,
 				A266CC4B2CC8252300B1681E /* AvailabilitySlot.swift in Sources */,
 				A266CC3D2CC824BF00B1681E /* UserProfile.swift in Sources */,
 				9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */,

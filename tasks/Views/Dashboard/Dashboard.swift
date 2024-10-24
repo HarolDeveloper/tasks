@@ -11,7 +11,7 @@ import SwiftData
 
 struct Dashboard: View {
     let pendingTasks: Int
-    let completedTasks: Int
+    let completedTasks: [Task]
     let todayTasks: [Task]
     
     var body: some View {
@@ -27,13 +27,19 @@ struct Dashboard: View {
                     
                     StatCard(
                         title: "Completadas",
-                        value: completedTasks,
+                        value: completedTasks.count,
                         color: .green
                     )
                 }
                 
                 // Today's Tasks
                 TodayTasksCard(tasks: todayTasks)
+                
+                // Task
+                NavigationLink(destination: TaskHistory(completedTasks: completedTasks)) {
+                    Text("Ver tareas completadas")
+                }
+                
             }
             .padding()
         }
@@ -52,11 +58,25 @@ extension Dashboard {
         task2.taskDescription = "Compras de la semana"
         task2.dueDate = Calendar.current.date(byAdding: .hour, value: 5, to: Date())
         
-        let task3 = Task(title: "Lavar ropa", priority: 1)
-        task3.taskDescription = "Lavar y doblar ropa"
+        let task3 = Task(title: "Trapear la cocina", priority: 1)
+        task3.taskDescription = "Limpiar bien las esquinas con cloralex"
         task3.dueDate = Calendar.current.date(byAdding: .hour, value: 8, to: Date())
+        task3.status = "completed"
         
-        return [task1, task2, task3]
+        let task4 = Task(title: "Sacar la basura", priority: 1)
+        task4.taskDescription = "Asegurarse de sacarla entre 3pm y 7pm"
+        task4.dueDate = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
+        
+        let task5 = Task(title: "Traer garrafones", priority: 1)
+        task5.taskDescription = "Revisar bien que los garrafones no esten rotos"
+        task5.dueDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+        task5.status = "completed"
+        
+        let task6 = Task(title: "Pagar la luz", priority: 3)
+        task6.taskDescription = "Revisen la cuenta de CFE en el grupo de whatsapp"
+        task6.dueDate = Calendar.current.date(byAdding: .hour, value:  1, to: Date())
+        
+        return [task1, task2, task3, task4, task5, task6]
     }
 }
 
@@ -81,7 +101,7 @@ extension Dashboard {
     return NavigationView {
         Dashboard(
             pendingTasks: 5,
-            completedTasks: 3,
+            completedTasks: tasks.filter { $0.status == "completed" },
             todayTasks: tasks
         )
     }
