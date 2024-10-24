@@ -8,82 +8,59 @@
 import SwiftUI
 import SwiftData
 
-
 struct Dashboard: View {
-    let pendingTasks: Int
-    let completedTasks: Int
-    let todayTasks: [Task]
+    @State private var userViewModel: UserViewModel
+    @State private var tasksViewModel: TasksViewModel
+    
+    init(userViewModel: UserViewModel, modelContext: ModelContext) {
+        _userViewModel = State(initialValue: userViewModel)
+        _tasksViewModel = State(initialValue: TasksViewModel(modelContext: modelContext))
+    }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
+                // User Header
+      
+              if let profile = userViewModel.userProfile {
+                  UserHeaderView(profile: profile)
+                }
+                
                 // Stats Cards
                 HStack(spacing: 16) {
                     StatCard(
                         title: "Pendientes",
-                        value: pendingTasks,
+                        value: tasksViewModel.pendingTasks,
                         color: .purple
                     )
                     
                     StatCard(
                         title: "Completadas",
-                        value: completedTasks,
+                        value: tasksViewModel.completedTasks,
                         color: .green
                     )
                 }
                 
+                // User Stats
+              //  if let stats = userViewModel.userStats {
+                //    UserStatsCard(stats: stats)
+               // }
+                
                 // Today's Tasks
-                TodayTasksCard(tasks: todayTasks)
+                if tasksViewModel.isLoading {
+                    ProgressView()
+                } else if !tasksViewModel.todayTasks.isEmpty {
+                    TodayTasksCard(tasks: tasksViewModel.todayTasks)
+                } else {
+                    Text("No hay tareas para hoy")
+                   
+                }
             }
             .padding()
         }
         .navigationTitle("Dashboard")
+        .refreshable {
+            await tasksViewModel.refresh()
+        }
     }
-}
-
-// Datos de ejemplo para el Preview
-extension Dashboard {
-    static var previewTasks: [Task] {
-        let task1 = Task(title: "Limpiar cocina", priority: 1)
-        task1.taskDescription = "Limpieza profunda semanal"
-        task1.dueDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-        
-        let task2 = Task(title: "Comprar víveres", priority: 2)
-        task2.taskDescription = "Compras de la semana"
-        task2.dueDate = Calendar.current.date(byAdding: .hour, value: 5, to: Date())
-        
-        let task3 = Task(title: "Lavar ropa", priority: 1)
-        task3.taskDescription = "Lavar y doblar ropa"
-        task3.dueDate = Calendar.current.date(byAdding: .hour, value: 8, to: Date())
-        
-        return [task1, task2, task3]
-    }
-}
-
-#Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let schema = Schema([
-        Task.self,
-        TaskType.self,
-        HousingGroup.self,
-        RoommateTaskAssignment.self
-    ])
-    
-    let container = try! ModelContainer(
-        for: schema,
-        configurations: config
-    )
-    
-    // Insertar datos de ejemplo en el contenedor
-    let tasks = Dashboard.previewTasks
-    tasks.forEach { container.mainContext.insert($0) }
-    
-    return NavigationView {
-        Dashboard(
-            pendingTasks: 5,
-            completedTasks: 3,
-            todayTasks: tasks
-        )
-    }
-    .modelContainer(container)
 }

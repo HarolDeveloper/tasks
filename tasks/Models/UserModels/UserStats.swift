@@ -3,7 +3,7 @@ import Foundation
 
 
 @Model
-class RoommateUserStats {
+class RoommateUserStats: Codable {
     var id: UUID
     var totalPoints: Int
     var tasksCompleted: Int
@@ -13,8 +13,12 @@ class RoommateUserStats {
     var averageCompletionTime: TimeInterval?
     var preferredTaskTypes: [String: Int]
     
-    // Relationship
     @Relationship var user: User?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, totalPoints, tasksCompleted, tasksFailed, currentStreak
+        case lastUpdated, averageCompletionTime, preferredTaskTypes
+    }
     
     init() {
         self.id = UUID()
@@ -26,7 +30,31 @@ class RoommateUserStats {
         self.preferredTaskTypes = [:]
     }
     
-    // Helper methods for statistics
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        totalPoints = try container.decode(Int.self, forKey: .totalPoints)
+        tasksCompleted = try container.decode(Int.self, forKey: .tasksCompleted)
+        tasksFailed = try container.decode(Int.self, forKey: .tasksFailed)
+        currentStreak = try container.decode(Int.self, forKey: .currentStreak)
+        lastUpdated = try container.decode(Date.self, forKey: .lastUpdated)
+        averageCompletionTime = try container.decodeIfPresent(TimeInterval.self, forKey: .averageCompletionTime)
+        preferredTaskTypes = try container.decode([String: Int].self, forKey: .preferredTaskTypes)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(totalPoints, forKey: .totalPoints)
+        try container.encode(tasksCompleted, forKey: .tasksCompleted)
+        try container.encode(tasksFailed, forKey: .tasksFailed)
+        try container.encode(currentStreak, forKey: .currentStreak)
+        try container.encode(lastUpdated, forKey: .lastUpdated)
+        try container.encodeIfPresent(averageCompletionTime, forKey: .averageCompletionTime)
+        try container.encode(preferredTaskTypes, forKey: .preferredTaskTypes)
+    }
+    
+    // Método existente para actualizar estadísticas
     func updateStats(with assignment: RoommateTaskAssignment) {
         if assignment.status == "completed" {
             self.tasksCompleted += 1
@@ -36,12 +64,12 @@ class RoommateUserStats {
                 self.totalPoints += points
             }
             
-            // Update task type preferences
+            // Actualizar tipo de tarea preferido
             if let taskType = assignment.task?.taskType?.name {
                 preferredTaskTypes[taskType, default: 0] += 1
             }
             
-            // Update average completion time
+            // Actualizar tiempo promedio de completación
             if let start = assignment.scheduledStart,
                let end = assignment.completedAt {
                 let completionTime = end.timeIntervalSince(start)
@@ -58,18 +86,5 @@ class RoommateUserStats {
         }
         
         self.lastUpdated = Date()
-    }
-    
-    // Calculate completion rate
-    var completionRate: Double {
-        let total = Double(tasksCompleted + tasksFailed)
-        guard total > 0 else { return 0.0 }
-        return Double(tasksCompleted) / total
-    }
-    
-    // Get preferred task types sorted by frequency
-    var sortedPreferredTaskTypes: [(type: String, count: Int)] {
-        return preferredTaskTypes.sorted { $0.value > $1.value }
-            .map { (type: $0.key, count: $0.value) }
     }
 }

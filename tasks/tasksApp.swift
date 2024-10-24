@@ -4,22 +4,24 @@ import SwiftData
 @main
 struct TasksApp: App {
     let container: ModelContainer
+    @State private var userState: UserState
     
     init() {
         do {
-            let schema = Schema([
-                User.self,
-                Task.self,
-                HousingGroup.self,
-                // Añade aquí otros modelos que necesites
-            ])
-            
-            let modelConfiguration = ModelConfiguration(
-                schema: schema,
-                isStoredInMemoryOnly: false
+            // Configurar el container
+            container = try ModelContainer(
+                for: User.self, Task.self, HousingGroup.self,
+                UserProfile.self, RoommateUserStats.self,
+                TaskType.self, RoommateTaskAssignment.self,
+                HouseholdMember.self, UserCalendar.self,
+                CalendarEvent.self, UserAvailabilitySlot.self,
+                PointHistory.self,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: false)
             )
             
-            container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            // Inicializar el estado del usuario
+            _userState = State(initialValue: UserState())
+            
         } catch {
             fatalError("Error initializing ModelContainer: \(error)")
         }
@@ -27,8 +29,11 @@ struct TasksApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(
+                userViewModel: UserViewModel(userState: userState, modelContext: container.mainContext)
+            )
+            .modelContainer(container)
         }
-        .modelContainer(container)
     }
 }
+
