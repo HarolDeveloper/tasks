@@ -45,10 +45,5 @@
                 "points": 12
             }
         }
-    ],
-    "statistics": {
-        "pendingTasks": 5,
-        "completedTasks": 3,
-        "todayTasksCount": 3
-    }
+    ]
 }
