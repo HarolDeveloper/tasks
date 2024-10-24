@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct Dashboard: View {
+
     @State private var userViewModel: UserViewModel
     @State private var tasksViewModel: TasksViewModel
     
@@ -47,13 +48,16 @@ struct Dashboard: View {
                // }
                 
                 // Today's Tasks
+
                 if tasksViewModel.isLoading {
                     ProgressView()
                 } else if !tasksViewModel.todayTasks.isEmpty {
                     TodayTasksCard(tasks: tasksViewModel.todayTasks)
+                  NavigationLink(destination: TaskHistory(completedTasks: tasksViewModel.completedTasks)) {
+                    Text("Ver tareas completadas")
+                }
                 } else {
-                    Text("No hay tareas para hoy")
-                   
+                    Text("No hay tareas para hoy")  
                 }
             }
             .padding()
@@ -64,3 +68,4 @@ struct Dashboard: View {
         }
     }
 }
+

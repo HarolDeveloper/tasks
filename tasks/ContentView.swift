@@ -13,6 +13,9 @@ struct ContentView: View {
         _userViewModel = State(wrappedValue: userViewModel)  // Initialize with StateObject
     }
     
+    private var completedTasks: [Task] {
+        tasks.filter { $0.status == "completed" }
+      
     var body: some View {
         if userViewModel.isLoading {
             LoadingView()
@@ -106,6 +109,7 @@ struct ErrorView: View {
     let retryAction: () -> Void
     
     var body: some View {
+   
         VStack(spacing: 20) {
             // Ícono de error
             Image(systemName: "exclamationmark.triangle.fill")
@@ -136,6 +140,7 @@ struct ErrorView: View {
             }
             .buttonStyle(.borderedProminent)
             .padding(.top, 8)
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
