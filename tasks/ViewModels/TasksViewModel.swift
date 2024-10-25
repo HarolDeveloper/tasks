@@ -34,13 +34,17 @@ class TasksViewModel: ObservableObject {
     }
     
     @MainActor
-       func refresh() async {
-           isLoading = true
-           loadTasks()
-           loadAssignments()
-           updateStats()
-           isLoading = false
-       }
+      func refresh() async {
+          isLoading = true
+          // Clear existing arrays before loading new data
+          tasks = []
+          assignments = []
+          todayTasks = []
+          loadTasks()
+          loadAssignments()
+          updateStats()
+          isLoading = false
+      }
     
     private func loadTasks() {
         guard let url = Bundle.main.url(forResource: "tasks", withExtension: "json"),
@@ -64,28 +68,34 @@ class TasksViewModel: ObservableObject {
             try cleanExistingData()
             
             // Process tasks
-            for taskDTO in response.tasks {
-                // Create TaskType
-                let taskType = TaskType(
-                    name: taskDTO.taskType.name,
-                    estimatedDuration: taskDTO.taskType.estimatedDuration,
-                    points: taskDTO.taskType.points
-                )
-                taskType.id = taskDTO.taskType.id
-                modelContext.insert(taskType)
+            var processedTaskIds = Set<UUID>() // Para rastrear IDs ya procesados
                 
-                // Create Task
-                let task = Task(title: taskDTO.title, priority: taskDTO.priority)
-                task.id = taskDTO.id
-                task.taskDescription = taskDTO.description
-                task.status = taskDTO.status
-                task.createdAt = taskDTO.createdAt
-                task.dueDate = taskDTO.dueDate
-                task.taskType = taskType
-                
-                modelContext.insert(task)
-                tasks.append(task)
-            }
+                for taskDTO in response.tasks {
+                    if !processedTaskIds.contains(taskDTO.id) {
+                        // Create TaskType
+                        let taskType = TaskType(
+                            name: taskDTO.taskType.name,
+                            estimatedDuration: taskDTO.taskType.estimatedDuration,
+                            points: taskDTO.taskType.points
+                        )
+                        taskType.id = taskDTO.taskType.id
+                        modelContext.insert(taskType)
+                        
+                        // Create Task
+                        let task = Task(title: taskDTO.title, priority: taskDTO.priority)
+                        task.id = taskDTO.id
+                        task.taskDescription = taskDTO.description
+                        task.status = taskDTO.status
+                        task.createdAt = taskDTO.createdAt
+                        task.dueDate = taskDTO.dueDate
+                        task.taskType = taskType
+                        
+                        modelContext.insert(task)
+                        tasks.append(task)
+                        
+                        processedTaskIds.insert(taskDTO.id)
+                    }
+                }
             
             try modelContext.save()
             
@@ -101,6 +111,22 @@ class TasksViewModel: ObservableObject {
             handleDecodingError(error)
         }
     }
+    
+    func getAssignment(for task: Task) -> RoommateTaskAssignment? {
+            assignments.first { $0.task?.id == task.id }
+        }
+        
+        // Método para obtener el nombre del usuario asignado a una tarea
+        func getAssignedUserName(for task: Task) -> String {
+            getAssignment(for: task)?.assignedUserDisplayName ?? "Sin asignar"
+        }
+        
+        // Método para obtener todas las tareas de un usuario
+        func getTasks(for userId: UUID) -> [Task] {
+            assignments
+                .filter { $0.assignedUserId == userId }
+                .compactMap { $0.task }
+        }
     
     private func handleDecodingError(_ error: Error) {
         if let decodingError = error as? DecodingError {

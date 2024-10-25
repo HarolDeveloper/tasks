@@ -2,6 +2,13 @@ import SwiftData
 import Foundation
 
 
+struct AssignedUserDTO: Codable {
+    let id: UUID
+    let username: String
+    let firstName: String?
+    let lastName: String?
+}
+
 @Model
 class RoommateTaskAssignment: Identifiable, Codable {
     @Attribute(.unique) var id: UUID
@@ -11,7 +18,13 @@ class RoommateTaskAssignment: Identifiable, Codable {
     var completedAt: Date?
     var status: String
     var pointsEarned: Int?
-    var taskId: String? // Add this property to store the taskId temporarily
+    var taskId: String?
+    
+    // Información del usuario asignado
+    var assignedUserId: UUID?
+    var assignedUsername: String?
+    var assignedUserFirstName: String?
+    var assignedUserLastName: String?
     
     @Relationship var task: Task?
     @Relationship var user: User?
@@ -26,13 +39,16 @@ class RoommateTaskAssignment: Identifiable, Codable {
         case status
         case pointsEarned
         case taskId
+        case assignedUser
     }
     
-    init(status: String) {
-        self.id = UUID()
-        self.assignedAt = Date()
-        self.status = status
-        self.pointHistory = []
+    var assignedUserDisplayName: String {
+        if let firstName = assignedUserFirstName, let lastName = assignedUserLastName {
+            return "\(firstName) \(lastName)"
+        } else if let username = assignedUsername {
+            return username
+        }
+        return "Sin asignar"
     }
     
     required init(from decoder: Decoder) throws {
@@ -46,9 +62,18 @@ class RoommateTaskAssignment: Identifiable, Codable {
         status = try container.decode(String.self, forKey: .status)
         pointsEarned = try container.decodeIfPresent(Int.self, forKey: .pointsEarned)
         taskId = try container.decodeIfPresent(String.self, forKey: .taskId)
+        
+        // Decodificar información del usuario asignado
+        if let userInfo = try container.decodeIfPresent(AssignedUserDTO.self, forKey: .assignedUser) {
+            assignedUserId = userInfo.id
+            assignedUsername = userInfo.username
+            assignedUserFirstName = userInfo.firstName
+            assignedUserLastName = userInfo.lastName
+        }
+        
         pointHistory = []
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         

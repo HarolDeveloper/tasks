@@ -12,7 +12,8 @@
                 "id": "660e8400-e29b-41d4-a716-446655440001",
                 "name": "Limpieza",
                 "estimatedDuration": 60,
-                "points": 10
+                "points": 10,
+                "icon": "spray.sparkle.fill"
             }
         },
         {
@@ -27,7 +28,8 @@
                 "id": "660e8400-e29b-41d4-a716-446655440002",
                 "name": "Compras",
                 "estimatedDuration": 120,
-                "points": 15
+                "points": 15,
+                "icon": "cart.fill"
             }
         },
         {
@@ -42,7 +44,24 @@
                 "id": "660e8400-e29b-41d4-a716-446655440003",
                 "name": "Lavandería",
                 "estimatedDuration": 90,
-                "points": 12
+                "points": 12,
+                "icon": "washer.fill"
+            }
+        },
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440003",
+            "title": "Barrer el patio",
+            "description": "Limpieza del patio trasero",
+            "status": "pending",
+            "priority": 3,
+            "createdAt": "2024-10-23T11:00:00Z",
+            "dueDate": "2024-10-24T16:00:00Z",
+            "taskType": {
+                "id": "660e8400-e29b-41d4-a716-446655440001",
+                "name": "Limpieza",
+                "estimatedDuration": 45,
+                "points": 8,
+                "icon": "leaf.fill"
             }
         }
     ]

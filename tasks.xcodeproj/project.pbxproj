@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */; };
 		9F81C5C82CC95069004C6315 /* TaskHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C72CC95069004C6315 /* TaskHistory.swift */; };
-		9F81C5CC2CC97921004C6315 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5CB2CC97921004C6315 /* MainView.swift */; };
 		A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */; };
 		A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB12CC8CDF300FAC153 /* StatCard.swift */; };
 		A231CCB42CC8CF7600FAC153 /* TodayTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */; };
@@ -44,12 +43,13 @@
 		A2B80ACC2CCA3FE600ED1453 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80ACB2CCA3FE600ED1453 /* MainTabView.swift */; };
 		A2B80ACE2CCA41ED00ED1453 /* UserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80ACD2CCA41ED00ED1453 /* UserHeaderView.swift */; };
 		A2B80AD02CCA42CF00ED1453 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */; };
+		A2B80AD22CCB0BC900ED1453 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */; };
+		A2B80AD42CCB0BED00ED1453 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTaskCard.swift; sourceTree = "<group>"; };
 		9F81C5C72CC95069004C6315 /* TaskHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHistory.swift; sourceTree = "<group>"; };
-		9F81C5CB2CC97921004C6315 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A231CCB12CC8CDF300FAC153 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
 		A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTaskCard.swift; sourceTree = "<group>"; };
@@ -85,6 +85,8 @@
 		A2B80ACB2CCA3FE600ED1453 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		A2B80ACD2CCA41ED00ED1453 /* UserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeaderView.swift; sourceTree = "<group>"; };
 		A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,10 +188,7 @@
 				A266CC332CC8185100B1681E /* Tasks */,
 				A266CC322CC8184300B1681E /* Schedule */,
 				A266CC312CC8183900B1681E /* Room */,
-
-
 				A2B80ACB2CCA3FE600ED1453 /* MainTabView.swift */,
-
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,6 +236,8 @@
 				A231CCB72CC8CFCA00FAC153 /* AssigneeAvatar.swift */,
 				A2B80ACD2CCA41ED00ED1453 /* UserHeaderView.swift */,
 				A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */,
+				A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */,
+				A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -385,10 +386,9 @@
 				9F81C5C82CC95069004C6315 /* TaskHistory.swift in Sources */,
 				A266CC412CC824DB00B1681E /* HousingGroup.swift in Sources */,
 				A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */,
+				A2B80AD42CCB0BED00ED1453 /* ErrorView.swift in Sources */,
 				A266CC4F2CC8253900B1681E /* CalendarEvent.swift in Sources */,
-
 				A231CCCD2CC9E43500FAC153 /* UserViewModel.swift in Sources */,
-
 				A266CC4B2CC8252300B1681E /* AvailabilitySlot.swift in Sources */,
 				A266CC3D2CC824BF00B1681E /* UserProfile.swift in Sources */,
 				9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */,
@@ -401,6 +401,7 @@
 				A231CCB62CC8CF9B00FAC153 /* TaskRow.swift in Sources */,
 				A266CC492CC8250E00B1681E /* TaskAssignment.swift in Sources */,
 				A2B80ACA2CCA3E2700ED1453 /* UserState.swift in Sources */,
+				A2B80AD22CCB0BC900ED1453 /* LoadingView.swift in Sources */,
 				A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
