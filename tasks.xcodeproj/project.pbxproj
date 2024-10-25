@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F65515B2CCB636800D21E13 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F65515A2CCB636800D21E13 /* AddTaskView.swift */; };
 		9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */; };
 		9F81C5C82CC95069004C6315 /* TaskHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C72CC95069004C6315 /* TaskHistory.swift */; };
 		A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F65515A2CCB636800D21E13 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTaskCard.swift; sourceTree = "<group>"; };
 		9F81C5C72CC95069004C6315 /* TaskHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHistory.swift; sourceTree = "<group>"; };
 		A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -236,8 +238,11 @@
 				A231CCB72CC8CFCA00FAC153 /* AssigneeAvatar.swift */,
 				A2B80ACD2CCA41ED00ED1453 /* UserHeaderView.swift */,
 				A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */,
+
+				9F65515A2CCB636800D21E13 /* AddTaskView.swift */,
 				A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */,
 				A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */,
+
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -403,6 +408,7 @@
 				A2B80ACA2CCA3E2700ED1453 /* UserState.swift in Sources */,
 				A2B80AD22CCB0BC900ED1453 /* LoadingView.swift in Sources */,
 				A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */,
+				9F65515B2CCB636800D21E13 /* AddTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
