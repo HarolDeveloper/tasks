@@ -29,22 +29,31 @@ struct TodayTasksCard: View {
 
 
 
-// TasksContent actualizado
 struct TasksContent: View {
+    @ObservedObject var tasksViewModel: TasksViewModel
     let isLoading: Bool
     let todayTasks: [Task]
     
     var body: some View {
         if isLoading {
-            LoadingCardView(title: "Cargando tareas...")
-        } else if !todayTasks.isEmpty {
-            TodayTasksCard(tasks: todayTasks)
+            ProgressView()
+        } else if todayTasks.isEmpty {
+           
         } else {
-            EmptyStateView(
-                icon: "checkmark.circle",
-                title: "¡Todo al día!",
-                message: "No hay tareas pendientes para hoy"
-            )
+            VStack(spacing: 12) {
+                ForEach(todayTasks) { task in
+                    VStack(alignment: .leading) {
+                        TodayTasksCard(tasks: todayTasks)
+                        
+                        if let assignment = tasksViewModel.getAssignment(for: task) {
+                            Text("Asignada a: \(assignment.assignedUserDisplayName)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .padding(.leading)
+                        }
+                    }
+                }
+            }
         }
     }
 }

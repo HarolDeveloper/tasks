@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 
+
 struct Dashboard: View {
     @ObservedObject var userViewModel: UserViewModel
     @StateObject private var tasksViewModel: TasksViewModel
@@ -29,7 +30,7 @@ struct Dashboard: View {
                     UserHeaderView(profile: profile)
                         .padding(.bottom, 8)
                 }
-                
+           
                 // Stats Grid
                 LazyVGrid(columns: [
                     GridItem(.flexible()),
@@ -56,9 +57,12 @@ struct Dashboard: View {
                             .fontWeight(.bold)
                         
                         Spacer()
-                        
+                         
                         if !completedTasks.isEmpty {
-                            NavigationLink(destination: TaskHistory(completedTasks: completedTasks)) {
+                            NavigationLink(destination: TaskHistory(
+                                //tasksViewModel: tasksViewModel,
+                                completedTasks: completedTasks
+                            )) {
                                 Label("Historial", systemImage: "clock.arrow.circlepath")
                                     .font(.subheadline)
                             }
@@ -67,6 +71,7 @@ struct Dashboard: View {
                     
                     // Usar TasksContent para mostrar las tareas
                     TasksContent(
+                        tasksViewModel: tasksViewModel,
                         isLoading: tasksViewModel.isLoading,
                         todayTasks: tasksViewModel.todayTasks
                     )
@@ -79,33 +84,5 @@ struct Dashboard: View {
         .refreshable {
             await tasksViewModel.refresh()
         }
-    }
-}
-
-// MARK: - Supporting Views
-struct EmptyStateView: View {
-    let icon: String
-    let title: String
-    let message: String
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: icon)
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
-            
-            Text(title)
-                .font(.title2)
-                .fontWeight(.bold)
-            
-            Text(message)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(12)
     }
 }
