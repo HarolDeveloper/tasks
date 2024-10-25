@@ -27,12 +27,20 @@ struct MainTabView: View {
             .tag(0)
             
             NavigationStack {
-                ProfileView(userViewModel: userViewModel)
+				AddTaskView(selectedTaskType: "") // <--- PLACEHOLDER!!
             }
             .tabItem {
-                Label("Perfil", systemImage: "person.fill")
+                Label("Agregar Tarea", systemImage: "plus.circle.fill")
             }
-            .tag(1)
+            .tag(1) // Cambie esto pero no tengo idea de que es, creo que rompe las tareas mostradas en el dashboard!!
+			
+			NavigationStack {
+				ProfileView(userViewModel: userViewModel)
+			}
+			.tabItem {
+				Label("Perfil", systemImage: "person.fill")
+			}
+			.tag(2) // Esto tambien lo cambie, antes era 1, pero queria tener el boton de agregar en medio.
         }
     }
 }

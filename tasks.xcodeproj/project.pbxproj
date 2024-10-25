@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F65515B2CCB636800D21E13 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F65515A2CCB636800D21E13 /* AddTaskView.swift */; };
 		9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */; };
 		9F81C5C82CC95069004C6315 /* TaskHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5C72CC95069004C6315 /* TaskHistory.swift */; };
-		9F81C5CC2CC97921004C6315 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F81C5CB2CC97921004C6315 /* MainView.swift */; };
 		A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */; };
 		A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB12CC8CDF300FAC153 /* StatCard.swift */; };
 		A231CCB42CC8CF7600FAC153 /* TodayTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */; };
@@ -47,9 +47,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F65515A2CCB636800D21E13 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTaskCard.swift; sourceTree = "<group>"; };
 		9F81C5C72CC95069004C6315 /* TaskHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHistory.swift; sourceTree = "<group>"; };
-		9F81C5CB2CC97921004C6315 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A231CCAE2CC8CDC300FAC153 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A231CCB12CC8CDF300FAC153 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
 		A231CCB32CC8CF7600FAC153 /* TodayTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTaskCard.swift; sourceTree = "<group>"; };
@@ -186,10 +186,7 @@
 				A266CC332CC8185100B1681E /* Tasks */,
 				A266CC322CC8184300B1681E /* Schedule */,
 				A266CC312CC8183900B1681E /* Room */,
-
-
 				A2B80ACB2CCA3FE600ED1453 /* MainTabView.swift */,
-
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,6 +234,7 @@
 				A231CCB72CC8CFCA00FAC153 /* AssigneeAvatar.swift */,
 				A2B80ACD2CCA41ED00ED1453 /* UserHeaderView.swift */,
 				A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */,
+				9F65515A2CCB636800D21E13 /* AddTaskView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -386,9 +384,7 @@
 				A266CC412CC824DB00B1681E /* HousingGroup.swift in Sources */,
 				A231CCAF2CC8CDC300FAC153 /* Dashboard.swift in Sources */,
 				A266CC4F2CC8253900B1681E /* CalendarEvent.swift in Sources */,
-
 				A231CCCD2CC9E43500FAC153 /* UserViewModel.swift in Sources */,
-
 				A266CC4B2CC8252300B1681E /* AvailabilitySlot.swift in Sources */,
 				A266CC3D2CC824BF00B1681E /* UserProfile.swift in Sources */,
 				9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */,
@@ -402,6 +398,7 @@
 				A266CC492CC8250E00B1681E /* TaskAssignment.swift in Sources */,
 				A2B80ACA2CCA3E2700ED1453 /* UserState.swift in Sources */,
 				A231CCB22CC8CDF300FAC153 /* StatCard.swift in Sources */,
+				9F65515B2CCB636800D21E13 /* AddTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
