@@ -97,7 +97,7 @@ struct ProfileView: View {
             .frame(height: 260)
             
             // Content
-            VStack(spacing: 24) {
+            VStack(spacing: 12) {
                 // Avatar Container
                 ZStack {
                     // Outer ring
@@ -113,7 +113,7 @@ struct ProfileView: View {
                             ),
                             lineWidth: 2
                         )
-                        .frame(width: 118, height: 118)
+                        .frame(width: 100, height: 100)
                     
                     // Main circle with glass effect
                     Circle()
@@ -165,7 +165,7 @@ struct ProfileView: View {
                 }
                 .buttonStyle(ScaleButtonStyle())
             }
-            .padding(.top, 40)
+            .padding(.top, 24)
         }
         .ignoresSafeArea(edges: .top)
     }

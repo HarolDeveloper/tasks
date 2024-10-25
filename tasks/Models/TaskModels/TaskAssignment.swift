@@ -1,16 +1,8 @@
 import SwiftData
 import Foundation
 
-
-struct AssignedUserDTO: Codable {
-    let id: UUID
-    let username: String
-    let firstName: String?
-    let lastName: String?
-}
-
 @Model
-class RoommateTaskAssignment: Identifiable, Codable {
+class RoommateTaskAssignment: Codable {
     @Attribute(.unique) var id: UUID
     var assignedAt: Date
     var scheduledStart: Date?
@@ -18,16 +10,9 @@ class RoommateTaskAssignment: Identifiable, Codable {
     var completedAt: Date?
     var status: String
     var pointsEarned: Int?
-    var taskId: String?
-    
-    // Información del usuario asignado
-    var assignedUserId: UUID?
-    var assignedUsername: String?
-    var assignedUserFirstName: String?
-    var assignedUserLastName: String?
     
     @Relationship var task: Task?
-    @Relationship var user: User?
+    @Relationship var assignedUserProfile: UserProfile?
     @Relationship(deleteRule: .cascade) var pointHistory: [PointHistory]
     
     enum CodingKeys: String, CodingKey {
@@ -38,45 +23,61 @@ class RoommateTaskAssignment: Identifiable, Codable {
         case completedAt
         case status
         case pointsEarned
-        case taskId
-        case assignedUser
+        case task
+        case assignedUser // Esto mapea al assignedUserProfile en el JSON
     }
     
-    var assignedUserDisplayName: String {
-        if let firstName = assignedUserFirstName, let lastName = assignedUserLastName {
-            return "\(firstName) \(lastName)"
-        } else if let username = assignedUsername {
-            return username
-        }
-        return "Sin asignar"
+    init() {
+        self.id = UUID()
+        self.assignedAt = Date()
+        self.status = "pending"
+        self.pointHistory = []
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         
         id = try container.decode(UUID.self, forKey: .id)
-        assignedAt = try container.decode(Date.self, forKey: .assignedAt)
-        scheduledStart = try container.decodeIfPresent(Date.self, forKey: .scheduledStart)
-        scheduledEnd = try container.decodeIfPresent(Date.self, forKey: .scheduledEnd)
-        completedAt = try container.decodeIfPresent(Date.self, forKey: .completedAt)
-        status = try container.decode(String.self, forKey: .status)
-        pointsEarned = try container.decodeIfPresent(Int.self, forKey: .pointsEarned)
-        taskId = try container.decodeIfPresent(String.self, forKey: .taskId)
         
-        // Decodificar información del usuario asignado
-        if let userInfo = try container.decodeIfPresent(AssignedUserDTO.self, forKey: .assignedUser) {
-            assignedUserId = userInfo.id
-            assignedUsername = userInfo.username
-            assignedUserFirstName = userInfo.firstName
-            assignedUserLastName = userInfo.lastName
+        // Decodificar fechas
+        if let dateString = try? container.decode(String.self, forKey: .assignedAt) {
+            assignedAt = dateFormatter.date(from: dateString) ?? Date()
+        } else {
+            assignedAt = Date()
         }
         
-        pointHistory = []
+        if let startString = try? container.decodeIfPresent(String.self, forKey: .scheduledStart) {
+            scheduledStart = dateFormatter.date(from: startString)
+        }
+        
+        if let endString = try? container.decodeIfPresent(String.self, forKey: .scheduledEnd) {
+            scheduledEnd = dateFormatter.date(from: endString)
+        }
+        
+        if let completedString = try? container.decodeIfPresent(String.self, forKey: .completedAt) {
+            completedAt = dateFormatter.date(from: completedString)
+        }
+        
+        status = try container.decode(String.self, forKey: .status)
+        pointsEarned = try container.decodeIfPresent(Int.self, forKey: .pointsEarned)
+        
+        // Decodificar task
+        let taskDTO = try container.decode(TaskDTO.self, forKey: .task)
+        let task = Task(title: taskDTO.title, priority: taskDTO.priority)
+        task.taskType = TaskType(name: taskDTO.taskType.name, estimatedDuration: taskDTO.taskType.estimatedDuration, points: taskDTO.taskType.points, icon: "spray.sparkle.fill")
+        self.task = task
+        
+        // Decodificar userProfile
+        let userProfileDTO = try container.decode(AssignedUserProfileDTO.self, forKey: .assignedUser)
+        self.assignedUserProfile = userProfileDTO.toUserProfile()
+        
+        self.pointHistory = []
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
         try container.encode(id, forKey: .id)
         try container.encode(assignedAt, forKey: .assignedAt)
         try container.encodeIfPresent(scheduledStart, forKey: .scheduledStart)
@@ -84,6 +85,15 @@ class RoommateTaskAssignment: Identifiable, Codable {
         try container.encodeIfPresent(completedAt, forKey: .completedAt)
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(pointsEarned, forKey: .pointsEarned)
-        try container.encodeIfPresent(taskId, forKey: .taskId)
+    }
+    
+    var assignedUserDisplayName: String {
+        if let profile = assignedUserProfile {
+            if let firstName = profile.firstName,
+               let lastName = profile.lastName {
+                return "\(firstName) \(lastName)"
+            }
+        }
+        return "Sin asignar"
     }
 }

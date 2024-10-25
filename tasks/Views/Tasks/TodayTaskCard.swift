@@ -7,52 +7,73 @@
 
 import SwiftUI
 
+// Actualiza TodayTasksCard para usar AssignmentRow
 struct TodayTasksCard: View {
-    let tasks: [Task]
+    let assignments: [RoommateTaskAssignment]
+    let currentUserId: UUID?
+    
+    private var userAssignments: [RoommateTaskAssignment] {
+        guard let userId = currentUserId else { return [] }
+        return assignments.filter { $0.assignedUserProfile?.id == userId }
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            ForEach(tasks) { task in
-                TaskRow(task: task)
-                
-                if task.id != tasks.last?.id {
-                    Divider()
+        VStack(alignment: .leading, spacing: 4) {
+            if userAssignments.isEmpty {
+                EmptyTasksView()
+            } else {
+                ForEach(userAssignments) { assignment in
+                    AssignmentRow(assignment: assignment)
+                    
+                    if assignment.id != userAssignments.last?.id {
+                        Divider()
+                            .padding(.vertical, 8)
+                    }
                 }
             }
         }
-        .padding()
+        .padding(.horizontal, 8)
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(radius: 2)
     }
+    
 }
 
 
-
 struct TasksContent: View {
-    @ObservedObject var tasksViewModel: TasksViewModel
-    let isLoading: Bool
-    let todayTasks: [Task]
+    let tasksViewModel: TasksViewModel
+    let userViewModel: UserViewModel
+    let completedTasks: [RoommateTaskAssignment]
     
     var body: some View {
-        if isLoading {
-            ProgressView()
-        } else if todayTasks.isEmpty {
-           
-        } else {
-            VStack(spacing: 12) {
-                ForEach(todayTasks) { task in
-                    VStack(alignment: .leading) {
-                        TodayTasksCard(tasks: todayTasks)
-                        
-                        if let assignment = tasksViewModel.getAssignment(for: task) {
-                            Text("Asignada a: \(assignment.assignedUserDisplayName)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.leading)
-                        }
+        VStack(alignment: .leading, spacing: 16) {
+            // Header
+            HStack {
+                Label("Tareas de Hoy", systemImage: "calendar")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                if !completedTasks.isEmpty {
+                    NavigationLink(destination: TaskHistory(completedTasks: completedTasks)) {
+                        Label("Historial", systemImage: "clock.arrow.circlepath")
+                            .font(.subheadline)
+                            .foregroundColor(.blue)
                     }
                 }
+            }
+            .padding(.horizontal, 8)
+            
+            // Tasks Content
+            if tasksViewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, minHeight: 200)
+            } else {
+                TodayTasksCard(
+                    assignments: tasksViewModel.assignments,
+                    currentUserId: userViewModel.currentUser?.id
+                )
             }
         }
     }

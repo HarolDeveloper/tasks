@@ -2,7 +2,6 @@
 import SwiftUI
 import SwiftData
 
-
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var userViewModel: UserViewModel
@@ -24,13 +23,13 @@ struct ContentView: View {
     }
 }
 
-// MARK: - Preview Provider
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let container = try! ModelContainer(
             for: Schema([
                 User.self,
-                Task.self,
+                TaskItem.self,  // Nuevo modelo de tarea
+                TaskCategory.self,  // Nuevo modelo de categoría
                 HousingGroup.self,
                 UserProfile.self,
                 RoommateUserStats.self,
@@ -42,10 +41,30 @@ struct ContentView_Previews: PreviewProvider {
                 UserAvailabilitySlot.self,
                 PointHistory.self
             ]),
-            configurations: [
-                ModelConfiguration(isStoredInMemoryOnly: true)
-            ]
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
+        
+        // Agregar datos de ejemplo para el preview
+        let context = container.mainContext
+        
+        // Crear una categoría de ejemplo
+        let category = TaskCategory(
+            name: "Limpieza",
+            estimatedDuration: 60,
+            points: 10,
+            icon: "spray.sparkle.fill"
+        )
+        context.insert(category)
+        
+        // Crear una tarea de ejemplo
+        let task = TaskItem(
+            title: "Limpiar cocina",
+            taskDescription: "Limpieza profunda semanal",
+            status: "pending",
+            priority: 1,
+            category: category
+        )
+        context.insert(task)
         
         let userState = UserState()
         let viewModel = UserViewModel(
@@ -53,10 +72,7 @@ struct ContentView_Previews: PreviewProvider {
             modelContext: container.mainContext
         )
         
-        ContentView(userViewModel: viewModel)
+        return ContentView(userViewModel: viewModel)
             .modelContainer(container)
     }
 }
-
-
-

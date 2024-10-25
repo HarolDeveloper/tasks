@@ -15,7 +15,7 @@ func dateToString(date: Date = Date.now) -> String {
 }
 
 struct TaskHistory: View {    
-    var completedTasks: [Task]
+    var completedTasks: [RoommateTaskAssignment]
     
     var body: some View {
         ScrollView {
@@ -25,7 +25,7 @@ struct TaskHistory: View {
             else {
                 VStack {
                     ForEach(completedTasks, id: \.self) { task in
-                        HistoryTaskCard(taskTitle: task.title, taskDateTime: dateToString())
+                        HistoryTaskCard(taskTitle: task.task!.title, taskDateTime: dateToString())
                             .listRowSeparator(.hidden)
                     }
                 }
@@ -38,14 +38,4 @@ struct TaskHistory: View {
     }
 }
 
-// Testing values for preview
-var testTasks: [Task] = [
-    Task(title: "Task 1", priority: 1),
-    Task(title: "Another task 2", priority: 1),
-    Task(title: "Something to do", priority: 1),
-    Task(title: "Whatever else", priority: 1),
-]
 
-#Preview {
-    TaskHistory(completedTasks: testTasks)
-}

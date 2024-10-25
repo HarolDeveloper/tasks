@@ -9,17 +9,22 @@ import SwiftUI
 import SwiftData
 
 
+
 struct Dashboard: View {
-    @ObservedObject var userViewModel: UserViewModel
-    @StateObject private var tasksViewModel: TasksViewModel
+    @State private var tasksViewModel: TasksViewModel
+    @State private var userViewModel: UserViewModel
     
     init(userViewModel: UserViewModel, modelContext: ModelContext) {
-        self.userViewModel = userViewModel
-        _tasksViewModel = StateObject(wrappedValue: TasksViewModel(modelContext: modelContext))
+        _userViewModel = State(initialValue: userViewModel)
+        _tasksViewModel = State(initialValue: TasksViewModel(modelContext: modelContext))
     }
     
-    private var completedTasks: [Task] {
-        tasksViewModel.tasks.filter { $0.status == "completed" }
+    private var completedTasks: [RoommateTaskAssignment] {
+        tasksViewModel.assignments.filter { $0.status == "completed" }
+    }
+    
+    private var pendingTasks: [RoommateTaskAssignment] {
+        tasksViewModel.assignments.filter { $0.status == "pending" }
     }
     
     var body: some View {
@@ -30,7 +35,7 @@ struct Dashboard: View {
                     UserHeaderView(profile: profile)
                         .padding(.bottom, 8)
                 }
-           
+                
                 // Stats Grid
                 LazyVGrid(columns: [
                     GridItem(.flexible()),
@@ -38,45 +43,26 @@ struct Dashboard: View {
                 ], spacing: 16) {
                     StatCard(
                         title: "Pendientes",
-                        value: tasksViewModel.pendingTasks,
+                        value: tasksViewModel.pendingAssignments,
                         color: .purple
                     )
                     
                     StatCard(
                         title: "Completadas",
-                        value: tasksViewModel.completedTasks,
+                        value: tasksViewModel.completedAssignments,
                         color: .green
                     )
                 }
                 
                 // Today's Tasks Section
                 VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Text("Tareas de Hoy")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        
-                        Spacer()
-                         
-                        if !completedTasks.isEmpty {
-                            NavigationLink(destination: TaskHistory(
-                                //tasksViewModel: tasksViewModel,
-                                completedTasks: completedTasks
-                            )) {
-                                Label("Historial", systemImage: "clock.arrow.circlepath")
-                                    .font(.subheadline)
-                            }
-                        }
-                    }
-                    
-                    // Usar TasksContent para mostrar las tareas
                     TasksContent(
                         tasksViewModel: tasksViewModel,
-                        isLoading: tasksViewModel.isLoading,
-                        todayTasks: tasksViewModel.todayTasks
+                        userViewModel: userViewModel,
+                        completedTasks: completedTasks
                     )
                 }
-                .padding(.top, 8)
+                .padding(.top, 16)
             }
             .padding()
         }

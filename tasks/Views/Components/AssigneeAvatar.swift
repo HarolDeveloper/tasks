@@ -11,7 +11,7 @@ struct AssigneeAvatar: View {
     let assignment: RoommateTaskAssignment
     
     var body: some View {
-        if let user = assignment.user {
+        if let user = assignment.assignedUserProfile?.user {
             Circle()
                 .fill(Color.gray.opacity(0.2))
                 .frame(width: 32, height: 32)

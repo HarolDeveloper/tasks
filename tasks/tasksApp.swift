@@ -8,13 +8,26 @@ struct TasksApp: App {
     
     init() {
         do {
+            // Crear el schema incluyendo todos los modelos
+            let schema = Schema([
+                User.self,
+                TaskItem.self,  // Nuevo modelo de tarea
+                TaskCategory.self,  // Nuevo modelo de categoría
+                HousingGroup.self,
+                UserProfile.self,
+                RoommateUserStats.self,
+                TaskType.self,
+                RoommateTaskAssignment.self,
+                HouseholdMember.self,
+                UserCalendar.self,
+                CalendarEvent.self,
+                UserAvailabilitySlot.self,
+                PointHistory.self
+            ])
+            
+            // Configuración del contenedor
             container = try ModelContainer(
-                for: User.self, Task.self, HousingGroup.self,
-                UserProfile.self, RoommateUserStats.self,
-                TaskType.self, RoommateTaskAssignment.self,
-                HouseholdMember.self, UserCalendar.self,
-                CalendarEvent.self, UserAvailabilitySlot.self,
-                PointHistory.self,
+                for: schema,
                 configurations: ModelConfiguration(isStoredInMemoryOnly: false)
             )
             userState = UserState()

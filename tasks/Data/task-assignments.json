@@ -2,67 +2,115 @@
     "assignments": [
         {
             "id": "770e8400-e29b-41d4-a716-446655440000",
-            "taskId": "550e8400-e29b-41d4-a716-446655440000",
             "assignedAt": "2024-10-23T08:00:00Z",
-            "scheduledStart": "2024-10-23T10:00:00Z",
-            "scheduledEnd": "2024-10-24T11:00:00Z",
+            "scheduledStart": "2024-10-24T10:00:00Z",
+            "scheduledEnd": "2024-10-25T11:00:00Z",
             "status": "pending",
             "pointsEarned": null,
+            "task": {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "title": "Limpiar cocina",
+                "description": "Limpieza profunda semanal",
+                "priority": 1,
+                "taskType": {
+                    "id": "660e8400-e29b-41d4-a716-446655440001",
+                    "name": "Limpieza",
+                    "estimatedDuration": 60,
+                    "points": 10,
+                    "icon": "spray.sparkle.fill"
+                }
+            },
             "assignedUser": {
                 "id": "880e8400-e29b-41d4-a716-446655440000",
                 "username": "john_doe",
                 "firstName": "John",
                 "lastName": "Doe",
-                "avatarColor": "blue"
+             
             }
         },
         {
             "id": "770e8400-e29b-41d4-a716-446655440001",
-            "taskId": "550e8400-e29b-41d4-a716-446655440001",
             "assignedAt": "2024-10-23T08:00:00Z",
-            "scheduledStart": "2024-10-23T14:00:00Z",
-            "scheduledEnd": "2024-10-24T16:00:00Z",
+            "scheduledStart": "2024-10-24T14:00:00Z",
+            "scheduledEnd": "2024-10-25T16:00:00Z",
             "status": "pending",
             "pointsEarned": null,
+            "task": {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "title": "Comprar víveres",
+                "description": "Compras de la semana",
+                "priority": 2,
+                "taskType": {
+                    "id": "660e8400-e29b-41d4-a716-446655440002",
+                    "name": "Compras",
+                    "estimatedDuration": 120,
+                    "points": 15,
+                    "icon": "cart.fill"
+                }
+            },
             "assignedUser": {
                 "id": "880e8400-e29b-41d4-a716-446655440001",
                 "username": "maria_garcia",
                 "firstName": "María",
                 "lastName": "García",
-                "avatarColor": "purple"
+                
             }
         },
         {
             "id": "770e8400-e29b-41d4-a716-446655440002",
-            "taskId": "550e8400-e29b-41d4-a716-446655440002",
             "assignedAt": "2024-10-23T08:00:00Z",
-            "scheduledStart": "2024-10-23T16:00:00Z",
-            "scheduledEnd": "2024-10-24T17:30:00Z",
+            "scheduledStart": "2024-10-24T16:00:00Z",
+            "scheduledEnd": "2024-10-25T17:30:00Z",
             "status": "completed",
             "completedAt": "2024-10-23T17:15:00Z",
             "pointsEarned": 12,
+            "task": {
+                "id": "550e8400-e29b-41d4-a716-446655440002",
+                "title": "Lavar ropa",
+                "description": "Lavar y doblar ropa",
+                "priority": 1,
+                "taskType": {
+                    "id": "660e8400-e29b-41d4-a716-446655440003",
+                    "name": "Lavandería",
+                    "estimatedDuration": 90,
+                    "points": 12,
+                    "icon": "washer.fill"
+                }
+            },
             "assignedUser": {
                 "id": "880e8400-e29b-41d4-a716-446655440002",
                 "username": "carlos_rodriguez",
                 "firstName": "Carlos",
                 "lastName": "Rodríguez",
-                "avatarColor": "green"
+               
             }
         },
         {
             "id": "770e8400-e29b-41d4-a716-446655440003",
-            "taskId": "550e8400-e29b-41d4-a716-446655440003",
             "assignedAt": "2024-10-23T11:30:00Z",
             "scheduledStart": "2024-10-24T09:00:00Z",
-            "scheduledEnd": "2024-10-24T10:00:00Z",
+            "scheduledEnd": "2024-10-25T10:00:00Z",
             "status": "pending",
             "pointsEarned": null,
+            "task": {
+                "id": "550e8400-e29b-41d4-a716-446655440003",
+                "title": "Barrer el patio",
+                "description": "Limpieza del patio trasero",
+                "priority": 3,
+                "taskType": {
+                    "id": "660e8400-e29b-41d4-a716-446655440001",
+                    "name": "Limpieza",
+                    "estimatedDuration": 45,
+                    "points": 8,
+                    "icon": "leaf.fill"
+                }
+            },
             "assignedUser": {
                 "id": "880e8400-e29b-41d4-a716-446655440000",
                 "username": "john_doe",
                 "firstName": "John",
                 "lastName": "Doe",
-                "avatarColor": "blue"
+               
             }
         }
     ]

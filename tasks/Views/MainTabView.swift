@@ -1,10 +1,3 @@
-//
-//  MainTabView.swift
-//  tasks
-//
-//  Created by H Lancheros Alvarez on 24/10/24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -27,20 +20,30 @@ struct MainTabView: View {
             .tag(0)
             
             NavigationStack {
-				AddTaskView(selectedTaskType: "") // <--- PLACEHOLDER!!
+                RegularTaskListView()
+                    .environment(\.modelContext, modelContext)
             }
             .tabItem {
                 Label("Agregar Tarea", systemImage: "plus.circle.fill")
             }
-            .tag(1) // Cambie esto pero no tengo idea de que es, creo que rompe las tareas mostradas en el dashboard!!
-			
-			NavigationStack {
-				ProfileView(userViewModel: userViewModel)
-			}
-			.tabItem {
-				Label("Perfil", systemImage: "person.fill")
-			}
-			.tag(2) // Esto tambien lo cambie, antes era 1, pero queria tener el boton de agregar en medio.
+            .tag(1)
+            
+            NavigationStack {
+                ProfileView(userViewModel: userViewModel)
+            }
+            .tabItem {
+                Label("Perfil", systemImage: "person.fill")
+            }
+            .tag(2)
+            
+            NavigationStack {
+                CalendarView().environment(\.modelContext, modelContext)
+            }
+            .tabItem {
+                Label("Calendario", systemImage: "calendar")
+            }
+            .tag(3)
         }
+        
     }
 }

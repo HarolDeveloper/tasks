@@ -46,6 +46,10 @@
 		A2B80AD02CCA42CF00ED1453 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */; };
 		A2B80AD22CCB0BC900ED1453 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */; };
 		A2B80AD42CCB0BED00ED1453 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */; };
+		A2B80AD62CCB8B6200ED1453 /* AssigmentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD52CCB8B6200ED1453 /* AssigmentRow.swift */; };
+		A2B80AD82CCBF99500ED1453 /* RegularTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD72CCBF99500ED1453 /* RegularTasksViewModel.swift */; };
+		A2B80ADA2CCBF9FB00ED1453 /* RegularTasksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80AD92CCBF9FB00ED1453 /* RegularTasksListView.swift */; };
+		A2B80ADC2CCC097F00ED1453 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B80ADB2CCC097F00ED1453 /* CalendarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +93,10 @@
 		A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		A2B80AD52CCB8B6200ED1453 /* AssigmentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssigmentRow.swift; sourceTree = "<group>"; };
+		A2B80AD72CCBF99500ED1453 /* RegularTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTasksViewModel.swift; sourceTree = "<group>"; };
+		A2B80AD92CCBF9FB00ED1453 /* RegularTasksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTasksListView.swift; sourceTree = "<group>"; };
+		A2B80ADB2CCC097F00ED1453 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +208,7 @@
 			children = (
 				A231CCCC2CC9E43500FAC153 /* UserViewModel.swift */,
 				A231CCCE2CC9E5E700FAC153 /* TasksViewModel.swift */,
+				A2B80AD72CCBF99500ED1453 /* RegularTasksViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -214,6 +223,7 @@
 		A266CC322CC8184300B1681E /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				A2B80ADB2CCC097F00ED1453 /* CalendarView.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -227,6 +237,9 @@
 				A231CCB92CC8CFEF00FAC153 /* EmptyTasksView.swift */,
 				9F81C5C72CC95069004C6315 /* TaskHistory.swift */,
 				9F81C5C52CC8DD3A004C6315 /* HistoryTaskCard.swift */,
+				A2B80AD52CCB8B6200ED1453 /* AssigmentRow.swift */,
+				9F65515A2CCB636800D21E13 /* AddTaskView.swift */,
+				A2B80AD92CCBF9FB00ED1453 /* RegularTasksListView.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -238,11 +251,8 @@
 				A231CCB72CC8CFCA00FAC153 /* AssigneeAvatar.swift */,
 				A2B80ACD2CCA41ED00ED1453 /* UserHeaderView.swift */,
 				A2B80ACF2CCA42CF00ED1453 /* ProfileView.swift */,
-
-				9F65515A2CCB636800D21E13 /* AddTaskView.swift */,
 				A2B80AD12CCB0BC900ED1453 /* LoadingView.swift */,
 				A2B80AD32CCB0BED00ED1453 /* ErrorView.swift */,
-
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -384,6 +394,8 @@
 				A266CC432CC824E700B1681E /* GroupMember.swift in Sources */,
 				A231CCC12CC8D07100FAC153 /* AllTasksView.swift in Sources */,
 				A266CC472CC8250800B1681E /* TaskType.swift in Sources */,
+				A2B80ADA2CCBF9FB00ED1453 /* RegularTasksListView.swift in Sources */,
+				A2B80ADC2CCC097F00ED1453 /* CalendarView.swift in Sources */,
 				A266CC212CC80EB400B1681E /* ContentView.swift in Sources */,
 				A2B80ACE2CCA41ED00ED1453 /* UserHeaderView.swift in Sources */,
 				A2B80AD02CCA42CF00ED1453 /* ProfileView.swift in Sources */,
@@ -398,10 +410,12 @@
 				A266CC3D2CC824BF00B1681E /* UserProfile.swift in Sources */,
 				9F81C5C62CC8DD3A004C6315 /* HistoryTaskCard.swift in Sources */,
 				A266CC512CC8254400B1681E /* PointHistory.swift in Sources */,
+				A2B80AD62CCB8B6200ED1453 /* AssigmentRow.swift in Sources */,
 				A231CCB82CC8CFCA00FAC153 /* AssigneeAvatar.swift in Sources */,
 				A266CC4D2CC8253000B1681E /* Calendar.swift in Sources */,
 				A231CCCF2CC9E5E700FAC153 /* TasksViewModel.swift in Sources */,
 				A266CC452CC824FA00B1681E /* Task.swift in Sources */,
+				A2B80AD82CCBF99500ED1453 /* RegularTasksViewModel.swift in Sources */,
 				A231CCBF2CC8D04900FAC153 /* TodayTasksCard_Previews.swift in Sources */,
 				A231CCB62CC8CF9B00FAC153 /* TaskRow.swift in Sources */,
 				A266CC492CC8250E00B1681E /* TaskAssignment.swift in Sources */,
